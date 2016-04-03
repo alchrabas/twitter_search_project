@@ -16,4 +16,11 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
 API = tweepy.API(auth)
 
-print(API.search_users("Alexander Chrabąszcz", 5, 1))
+most_active_users = ['Ioan Lightoller', 'traceymarie', 'dbrett480', 'Kenz300', 'flossophy', 'kareemachan',
+                     'george martini', 'ebanks84', 'KarateKid', 'Hillbilly49', 'jsgaetano', 'henrypapillon',
+                     'msgirlintn', 'Asmondius', 'PhilipTaylor', 'Genders', 'SteveDenver', 'MarcEdward', 'ThinkCreeps',
+                     'onionboy', 'frank day', 'Fran Jaime', 'KIVPossum', 'ljc', 'kimbanyc', 'LMPE', 'l78lancer',
+                     'den1953', 'GraphicMatt']
+
+for user_name in most_active_users:
+    print user_name, [found_user.screen_name for found_user in API.search_users(user_name, 5, 1)]
