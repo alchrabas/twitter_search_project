@@ -21,15 +21,21 @@ API_COOLDOWN_MINUTES = 16  # keep safe above 15 minute window
 
 
 def check_most_active_users():
-    i = 0
 
     huff_users_file = open("top_huff_users.txt", "r")
-    out_file = open("matching_users.txt", "w")
+    out_file = open("matching_users.txt", "a")
+
+    for i in range(956):
+        huff_users_file.readline()
+    i = 0
+
     for line in huff_users_file:
         user_tuple = eval(line)
         user_name = user_tuple[0]
+        print("try ", user_name)
         i += 1
         if i >= API_REQUESTS_BEFORE_COOLDOWN:
+            print("i is ", i)
             i = 0
             time.sleep(API_COOLDOWN_MINUTES * 60)
         else:
@@ -38,6 +44,7 @@ def check_most_active_users():
         matching_users = [found_user.screen_name for found_user in API.search_users(user_name, 5, 1)]
 
         out_file.write(user_name + " " + str(matching_users) + "\n")
+        out_file.flush()
     out_file.close()
 
 
