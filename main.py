@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 import tweepy
+import time
 
 CONSUMER_KEY = 'u7mL2spLw8wSOhE7iq1DC4KPX'
 CONSUMER_SECRET = 'WZzq8RcKtybhxzi6L5f4J9UY5aRSzFRp2kZnKgUVFGnogFzEnQ'
@@ -16,11 +16,37 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
 API = tweepy.API(auth)
 
-most_active_users = ['Ioan Lightoller', 'traceymarie', 'dbrett480', 'Kenz300', 'flossophy', 'kareemachan',
-                     'george martini', 'ebanks84', 'KarateKid', 'Hillbilly49', 'jsgaetano', 'henrypapillon',
-                     'msgirlintn', 'Asmondius', 'PhilipTaylor', 'Genders', 'SteveDenver', 'MarcEdward', 'ThinkCreeps',
-                     'onionboy', 'frank day', 'Fran Jaime', 'KIVPossum', 'ljc', 'kimbanyc', 'LMPE', 'l78lancer',
-                     'den1953', 'GraphicMatt']
+API_REQUESTS_BEFORE_COOLDOWN = 100
+API_COOLDOWN_MINUTES = 16  # keep safe above 15 minute window
 
-for user_name in most_active_users:
-    print user_name, [found_user.screen_name for found_user in API.search_users(user_name, 5, 1)]
+
+def check_most_active_users():
+    i = 0
+
+    huff_users_file = open("top_huff_users.txt", "r")
+    out_file = open("matching_users.txt", "w")
+    for line in huff_users_file:
+        user_tuple = eval(line)
+        user_name = user_tuple[0]
+        i += 1
+        if i >= API_REQUESTS_BEFORE_COOLDOWN:
+            i = 0
+            time.sleep(API_COOLDOWN_MINUTES * 60)
+        else:
+            time.sleep(1)
+
+        matching_users = [found_user.screen_name for found_user in API.search_users(user_name, 5, 1)]
+
+        out_file.write(user_name + " " + str(matching_users) + "\n")
+    out_file.close()
+
+
+def check_hashtags():
+    for line in [a for a in API.search("#potatoes since:2016-01-02", rpp=10)]:
+        # Search api returns the results for the last 6-9 days.
+        print(line)
+
+        # check_hashtags()
+
+
+check_most_active_users()
