@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8b84d66-3678-4e60-86f8-22bf132d0b0f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/create_database.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/database.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
@@ -62,18 +58,18 @@
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.79522187">
-              <caret line="129" column="12" selection-start-line="129" selection-start-column="12" selection-end-line="129" selection-end-column="12" />
+              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-                <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-                <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-                <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-                <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-                <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-                <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-                <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-                <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+                <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+                <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+                <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+                <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+                <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+                <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+                <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+                <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+                <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
               </folding>
             </state>
           </provider>
@@ -595,7 +591,13 @@
       <option name="project" value="LOCAL" />
       <updated>1460369567646</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="create postgres database tables for twitter data">
+      <created>1460942729994</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1460942729994</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -604,6 +606,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27795875" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297062" sideWeight="0.5173724" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -614,7 +617,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -640,7 +642,8 @@
     <MESSAGE value="Query database for top authors; get matching users from twitter API" />
     <MESSAGE value="Matching users returned from twitter api" />
     <MESSAGE value="Update users taken from twitter API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update users taken from twitter API" />
+    <MESSAGE value="create postgres database tables for twitter data" />
+    <option name="LAST_COMMIT_MESSAGE" value="create postgres database tables for twitter data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -669,15 +672,15 @@
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -712,15 +715,15 @@
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -797,15 +800,15 @@
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -866,15 +869,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -925,15 +928,15 @@
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -984,15 +987,15 @@
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -1011,15 +1014,15 @@
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
@@ -1138,18 +1141,18 @@
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.79522187">
-          <caret line="129" column="12" selection-start-line="129" selection-start-column="12" selection-end-line="129" selection-end-column="12" />
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1460942690711" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
-            <marker date="1460942690711" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
-            <marker date="1460942690711" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
-            <marker date="1460942690711" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
-            <marker date="1460942690711" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
-            <marker date="1460942690711" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
-            <marker date="1460942690711" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
-            <marker date="1460942690711" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
+            <marker date="1460942729739" expanded="true" signature="1841:1889" placeholder="SELECT COUNT... twitter_users" />
+            <marker date="1460942729739" expanded="true" signature="1958:2084" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="1958:3480" placeholder="INSERT INTO twitter_users... " />
+            <marker date="1460942729739" expanded="true" signature="2378:2416" placeholder="SELECT id FR... authors" />
+            <marker date="1460942729739" expanded="true" signature="2483:2582" placeholder="SELECT COUNT... huff_twitter_users_junction" />
+            <marker date="1460942729739" expanded="true" signature="2683:2782" placeholder="INSERT INTO huff_twitter_users_junction... " />
+            <marker date="1460942729739" expanded="true" signature="2990:3064" placeholder="SELECT COUNT... twitter_follows" />
+            <marker date="1460942729739" expanded="true" signature="3164:3240" placeholder="INSERT INTO twitter_follows... " />
+            <marker date="1460942729739" expanded="true" signature="3480:3654" placeholder="import pg_co... " />
           </folding>
         </state>
       </provider>
