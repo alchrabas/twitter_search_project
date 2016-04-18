@@ -1,3 +1,5 @@
+import sys
+
 import tweepy
 import time
 from database import conn
@@ -15,7 +17,7 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.secure = True
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-API = tweepy.API(auth)
+api = tweepy.API(auth, wait_on_rate_limit=True)
 
 API_REQUESTS_BEFORE_COOLDOWN = 150
 API_COOLDOWN_SECONDS = 16 * 60  # keep safe above 15 minute window
@@ -27,21 +29,14 @@ def check_most_active_users():
 
     for i in range(956):
         huff_users_file.readline()
-    i = 0
 
     for line in huff_users_file:
         user_tuple = eval(line)
         user_name = user_tuple[0]
         print("try ", user_name)
-        i += 1
-        if i >= API_REQUESTS_BEFORE_COOLDOWN:
-            print("i is ", i)
-            i = 0
-            time.sleep(API_COOLDOWN_SECONDS)
-        else:
-            time.sleep(1)
 
-        matching_users = [found_user.screen_name for found_user in API.search_users(user_name, 5, 1)]
+
+        matching_users = [found_user.screen_name for found_user in api.search_users(user_name, 5, 1)]
 
         print(matching_users)
         # out_file.write(user_name + " " + str(matching_users) + "\n")
@@ -50,7 +45,7 @@ def check_most_active_users():
 
 
 def check_hashtags():
-    for line in [a for a in API.search("#potatoes since:2016-01-02", rpp=10)]:
+    for line in [a for a in api.search("#potatoes since:2016-01-02", rpp=10)]:
         # Search api returns the results for the last 6-9 days.
         print(line)
 
@@ -59,7 +54,7 @@ def check_hashtags():
 
 def save_user_in_db(user, cur):
     if isinstance(user, str):
-        user = API.get_user(user)
+        user = api.get_user(user)
 
     cur.execute("SELECT COUNT(*) FROM twitter_users WHERE id = %s", (user.id,))
 
@@ -100,32 +95,36 @@ def load_followers_for_users_from_file():
 
     cur = conn.cursor()
 
-    i = 0
     for line in huff_twitt_matches:
-        huff_name, _, twitter_names = line.partition(" ")
-        twitter_names = eval(twitter_names)
+        try:
+            huff_name, twitter_names = split_huff_and_twitter_line(line)
 
-        for twitter_name in twitter_names:
+            for twitter_name in twitter_names:
 
-            twitter_user = API.get_user(twitter_name) # 1 CALL
-            print("Working on ", twitter_name, " having ", twitter_user.followers_count, "followers")
+                twitter_user = api.get_user(twitter_name) # 1 CALL
+                print("Working on ", twitter_name, " having ", twitter_user.followers_count, "followers")
 
-            save_user_in_db(twitter_user, cur)
-            link_huff_user_with_twitter(huff_name, twitter_user.id, cur)
+                save_user_in_db(twitter_user, cur)
+                link_huff_user_with_twitter(huff_name, twitter_user.id, cur)
 
-            next_cursor = -1
-            followers = API.followers(twitter_user.id, next_cursor)  # 1 CALL
+                next_cursor = -1
+                followers = api.followers(twitter_user.id, next_cursor)  # 1 CALL
 
-            for follower in followers:
-                save_user_in_db(follower, cur)
-                save_a_follower(twitter_user, follower, cur)
-            conn.commit()
+                for follower in followers:
+                    save_user_in_db(follower, cur)
+                    save_a_follower(twitter_user, follower, cur)
+                try:
+                    conn.commit()
+                except:
+                    print("### SOMETHING BAD HAS HAPPENED WHEN WORKING ON {}, BUT WE GO FORWARD".format(twitter_name))
+        except:
+            print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()))
 
-            i += 2
-            time.sleep(1)
 
-        if i >= API_REQUESTS_BEFORE_COOLDOWN:  # we need to cooldown
-            time.sleep(API_COOLDOWN_SECONDS)
+def split_huff_and_twitter_line(line):
+    huff_name, _, twitter_names = line.partition(" [")
+    twitter_names = eval("[" + twitter_names)
+    return huff_name, twitter_names
 
 
 load_followers_for_users_from_file()
