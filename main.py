@@ -1,26 +1,18 @@
-import sys
+import traceback
+import sys, time
 
 import tweepy
-import time
 from database import conn
 
-CONSUMER_KEY = 'u7mL2spLw8wSOhE7iq1DC4KPX'
-CONSUMER_SECRET = 'WZzq8RcKtybhxzi6L5f4J9UY5aRSzFRp2kZnKgUVFGnogFzEnQ'
+from twitter_auth import auths
 
-# The access tokens can be found on your applications's Details
-# page located at https://dev.twitter.com/apps (located
-# under "Your access token")
-ACCESS_TOKEN = '500255045-7nsZZMFq4BhQaVwh6zDhZvu19zrYaTD8tMA9mHW8'
-ACCESS_TOKEN_SECRET = 'RGclAIedkRHtls2d31dgnBk3pqey1UQFnw1P7moTBg8I8'
+apis = [tweepy.API(auth, wait_on_rate_limit=True) for auth in auths]
 
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.secure = True
-auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-api = tweepy.API(auth, wait_on_rate_limit=True)
-
-API_REQUESTS_BEFORE_COOLDOWN = 150
-API_COOLDOWN_SECONDS = 16 * 60  # keep safe above 15 minute window
+def get_api_and_move_to_end():
+    first_element = apis.pop(0)
+    apis.append(first_element)
+    return first_element
 
 
 def check_most_active_users():
@@ -35,8 +27,8 @@ def check_most_active_users():
         user_name = user_tuple[0]
         print("try ", user_name)
 
-
-        matching_users = [found_user.screen_name for found_user in api.search_users(user_name, 5, 1)]
+        matching_users = [found_user.screen_name for found_user in
+                          get_api_and_move_to_end().search_users(user_name, 5, 1)]
 
         print(matching_users)
         # out_file.write(user_name + " " + str(matching_users) + "\n")
@@ -45,7 +37,7 @@ def check_most_active_users():
 
 
 def check_hashtags():
-    for line in [a for a in api.search("#potatoes since:2016-01-02", rpp=10)]:
+    for line in [a for a in get_api_and_move_to_end().search("#potatoes since:2016-01-02", rpp=10)]:
         # Search api returns the results for the last 6-9 days.
         print(line)
 
@@ -54,7 +46,7 @@ def check_hashtags():
 
 def save_user_in_db(user, cur):
     if isinstance(user, str):
-        user = api.get_user(user)
+        user = get_api_and_move_to_end().get_user(user)
 
     cur.execute("SELECT COUNT(*) FROM twitter_users WHERE id = %s", (user.id,))
 
@@ -95,20 +87,31 @@ def load_followers_for_users_from_file():
 
     cur = conn.cursor()
 
+    start_time = time.time()
+
+    line_no = 0
+    LINES_TO_SKIP = 99
     for line in huff_twitt_matches:
+
+        curr_time = time.time()
+        print("Elapsed time: ", curr_time - start_time)
+        line_no += 1
+        if line_no < LINES_TO_SKIP:
+            continue
+
         try:
             huff_name, twitter_names = split_huff_and_twitter_line(line)
 
             for twitter_name in twitter_names:
 
-                twitter_user = api.get_user(twitter_name) # 1 CALL
+                twitter_user = get_api_and_move_to_end().get_user(twitter_name)  # 1 CALL
                 print("Working on ", twitter_name, " having ", twitter_user.followers_count, "followers")
 
                 save_user_in_db(twitter_user, cur)
                 link_huff_user_with_twitter(huff_name, twitter_user.id, cur)
 
                 next_cursor = -1
-                followers = api.followers(twitter_user.id, next_cursor)  # 1 CALL
+                followers = get_api_and_move_to_end().followers(twitter_user.id, next_cursor)  # 1 CALL
 
                 for follower in followers:
                     save_user_in_db(follower, cur)
@@ -117,8 +120,9 @@ def load_followers_for_users_from_file():
                     conn.commit()
                 except:
                     print("### SOMETHING BAD HAS HAPPENED WHEN WORKING ON {}, BUT WE GO FORWARD".format(twitter_name))
+                    conn.rollback()
         except:
-            print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()))
+            print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
 
 
 def split_huff_and_twitter_line(line):

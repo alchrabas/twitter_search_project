@@ -7,9 +7,9 @@ cur.execute("""CREATE TABLE IF NOT EXISTS twitter_users
       id bigint NOT NULL,
       username character(45),
       real_name character(64),
-      avatar_url character(128),
-      description character(256),
-      location character(128),
+      avatar_url character(512),
+      description character(512),
+      location character(512),
       CONSTRAINT id PRIMARY KEY (id)
     )
     WITH (
