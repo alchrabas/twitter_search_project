@@ -1,5 +1,4 @@
 from database import conn
-import csv
 
 cur = conn.cursor()
 
@@ -8,8 +7,18 @@ cur.execute("""SELECT follower.username AS follower, followed.username AS follow
     INNER JOIN twitter_users AS follower ON tf.follower = follower.id
     INNER JOIN twitter_users AS followed ON tf.followed = followed.id""")
 
-to_graphviz_file = open("data/to_graphviz.csv", "w")
-csv_writer = csv.writer(to_graphviz_file, quoting=csv.QUOTE_ALL)
+to_graphviz_file = open("data/to_graphviz.gv", "w")
 
+header_text = """digraph {
+	graph [bgcolor=white fontcolor=black fontsize=16 layout=sfdp overlap=false]
+	node [color=black fontname=Helvetica]
+	edge [arrowhead=open color=black fontcolor=gray fontname=Courier fontsize=12]
+"""
+
+footer_text = "}"
+
+to_graphviz_file.write(header_text)
 for follower, followed in cur.fetchall():
-    csv_writer.writerow([follower.strip(), followed.strip()])
+    to_graphviz_file.write('			"' + follower.strip() + '" -> "' + followed.strip() + "\"\n")
+
+to_graphviz_file.write(footer_text)
