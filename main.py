@@ -19,6 +19,7 @@ def check_most_active_users():
     huff_users_file = open("top_huff_users.txt", "r")
     # out_file = open("matching_users.txt", "a")
 
+
     for i in range(956):
         huff_users_file.readline()
 
@@ -84,13 +85,14 @@ def save_a_follower(followed, follower, cur):
 
 def load_followers_for_users_from_file():
     huff_twitt_matches = open("matching_users.txt", "r")
+    failed_users_file = open("failed_users.txt", "a")
 
     cur = conn.cursor()
 
     start_time = time.time()
 
     line_no = 0
-    LINES_TO_SKIP = 99
+    LINES_TO_SKIP = 181
     for line in huff_twitt_matches:
 
         curr_time = time.time()
@@ -121,8 +123,14 @@ def load_followers_for_users_from_file():
                 except:
                     print("### SOMETHING BAD HAS HAPPENED WHEN WORKING ON {}, BUT WE GO FORWARD".format(twitter_name))
                     conn.rollback()
+                    failed_users_file.write(line + "\n")
         except:
             print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
+            conn.rollback()
+            failed_users_file.write(line)
+            failed_users_file.flush()
+
+    failed_users_file.close()
 
 
 def split_huff_and_twitter_line(line):
