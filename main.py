@@ -92,9 +92,8 @@ def load_followers_for_users_from_file():
     start_time = time.time()
 
     line_no = 0
-    LINES_TO_SKIP = 181
+    LINES_TO_SKIP = 564
     for line in huff_twitt_matches:
-
         curr_time = time.time()
         print("Elapsed time: ", curr_time - start_time)
         line_no += 1
@@ -112,18 +111,27 @@ def load_followers_for_users_from_file():
                 save_user_in_db(twitter_user, cur)
                 link_huff_user_with_twitter(huff_name, twitter_user.id, cur)
 
-                next_cursor = -1
-                followers = get_api_and_move_to_end().followers(twitter_user.id, next_cursor)  # 1 CALL
+                last_api = get_api_and_move_to_end()
+                followers = tweepy.Cursor(last_api.followers, id=twitter_user.id).items(100)  # 1 CALL
 
-                for follower in followers:
-                    save_user_in_db(follower, cur)
-                    save_a_follower(twitter_user, follower, cur)
+                while True:
+                    try:
+                        follower = next(followers)
+                        save_user_in_db(follower, cur)
+                        save_a_follower(twitter_user, follower, cur)
+                    except tweepy.TweepError:
+                        time.sleep(60 * 5)
+                        continue
+                    except StopIteration:
+                        break
                 try:
                     conn.commit()
                 except:
                     print("### SOMETHING BAD HAS HAPPENED WHEN WORKING ON {}, BUT WE GO FORWARD".format(twitter_name))
                     conn.rollback()
                     failed_users_file.write(line + "\n")
+            time.sleep(2)
+
         except:
             print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
             conn.rollback()
