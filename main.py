@@ -45,8 +45,22 @@ def check_hashtags():
         # check_hashtags()
 
 
+def get_id_by_name(name, cur):
+    cur.execute("SELECT id FROM twitter_users WHERE username = %s", (name,))
+    return cur.fetchone()[0]
+
+
+def is_user_in_db(user_name_or_id, cur):
+    try:
+        user_id = int(user_name_or_id)
+    except ValueError:
+        user_id = 0
+    cur.execute("SELECT COUNT(*) FROM twitter_users WHERE username = %s OR id = %s", (str(user_name_or_id), user_id,))
+    return cur.fetchone()[0]
+
+
 def save_user_in_db(user, cur):
-    if isinstance(user, str):
+    if isinstance(user, (str, int)):
         user = get_api_and_move_to_end().get_user(user)
 
     cur.execute("SELECT COUNT(*) FROM twitter_users WHERE id = %s", (user.id,))
@@ -73,26 +87,26 @@ def link_huff_user_with_twitter(huff_name, twitter_user_id, cur):
         print("Junction between " + huff_name + " and " + str(twitter_user_id) + " already exists")
 
 
-def save_a_follower(followed, follower, cur):
+def save_a_follower(followed_id, follower_id, cur):
     cur.execute("SELECT COUNT(*) FROM twitter_follows WHERE followed = %s AND follower = %s",
-                (followed.id, follower.id))
+                (followed_id, follower_id))
     if not cur.fetchone()[0]:
         cur.execute("""INSERT INTO twitter_follows (followed, follower)
-            VALUES (%s, %s)""", (followed.id, follower.id))
+            VALUES (%s, %s)""", (followed_id, follower_id))
     else:
-        print("User " + follower.screen_name + " is already following " + followed.screen_name)
+        print("User " + str(follower_id) + " is already following " + str(followed_id))
 
 
 def load_followers_for_users_from_file():
     huff_twitt_matches = open("matching_users.txt", "r")
-    failed_users_file = open("failed_users.txt", "a")
+    failed_users_file = open("failed_users3.txt", "a")
 
     cur = conn.cursor()
 
     start_time = time.time()
 
     line_no = 0
-    LINES_TO_SKIP = 564
+    LINES_TO_SKIP = 0
     for line in huff_twitt_matches:
         curr_time = time.time()
         print("Elapsed time: ", curr_time - start_time)
@@ -111,26 +125,85 @@ def load_followers_for_users_from_file():
                 save_user_in_db(twitter_user, cur)
                 link_huff_user_with_twitter(huff_name, twitter_user.id, cur)
 
-                last_api = get_api_and_move_to_end()
-                followers = tweepy.Cursor(last_api.followers, id=twitter_user.id).items(100)  # 1 CALL
+                next_cursor = -1
+                followers = get_api_and_move_to_end().followers(twitter_user.id, next_cursor)  # 1 CALL
 
-                while True:
-                    try:
-                        follower = next(followers)
-                        save_user_in_db(follower, cur)
-                        save_a_follower(twitter_user, follower, cur)
-                    except tweepy.TweepError:
-                        time.sleep(60 * 5)
-                        continue
-                    except StopIteration:
-                        break
+                for follower in followers:
+                    save_user_in_db(follower, cur)
+                    save_a_follower(twitter_user.id, follower.id, cur)
                 try:
                     conn.commit()
                 except:
                     print("### SOMETHING BAD HAS HAPPENED WHEN WORKING ON {}, BUT WE GO FORWARD".format(twitter_name))
                     conn.rollback()
                     failed_users_file.write(line + "\n")
-            time.sleep(2)
+                    failed_users_file.flush()
+
+        except:
+            print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
+            conn.rollback()
+            failed_users_file.write(line)
+            failed_users_file.flush()
+
+    failed_users_file.close()
+
+
+def load_following_for_users_from_file():
+    huff_twitt_matches = open("matching_users.txt", "r")
+    failed_users_file = open("failed_users4.txt", "a")
+
+    cur = conn.cursor()
+
+    start_time = time.time()
+
+    existing_users = 0
+    not_existing_users = 0
+
+    line_no = 0
+    LINES_TO_SKIP = 124
+    for line in huff_twitt_matches:
+        curr_time = time.time()
+        print("Elapsed time: ", curr_time - start_time, "existed:", existing_users, "not existed:", not_existing_users)
+        line_no += 1
+        if line_no < LINES_TO_SKIP:
+            continue
+
+        try:
+            huff_name, twitter_names = split_huff_and_twitter_line(line)
+
+            for twitter_name in twitter_names:
+                print("Working on ", twitter_name)
+                if not is_user_in_db(twitter_name, cur):
+                    twitter_user = get_api_and_move_to_end().get_user(twitter_name)  # 1 CALL
+                    print("who wasn't in db")
+
+                    save_user_in_db(twitter_user, cur)
+                    link_huff_user_with_twitter(huff_name, twitter_user.id, cur)
+
+                next_cursor = -1
+                response = get_api_and_move_to_end().friends_ids(screen_name=twitter_name,
+                                                                 cursor=next_cursor)  # 1 CALL
+
+                followed_ids = response[0]
+                print("Has ", len(followed_ids), " follows")
+                if len(followed_ids) > 100:  # limit to 100
+                    followed_ids = followed_ids[:100]
+
+                for followed_id in followed_ids:
+
+                    if not is_user_in_db(followed_id, cur):
+                        save_user_in_db(followed_id, cur)
+                        not_existing_users += 1
+                    else:
+                        existing_users += 1
+                    save_a_follower(followed_id, get_id_by_name(twitter_name, cur), cur)
+                try:
+                    conn.commit()
+                except:
+                    print("### SOMETHING BAD HAS HAPPENED WHEN WORKING ON {}, BUT WE GO FORWARD".format(twitter_name))
+                    conn.rollback()
+                    failed_users_file.write(line + "\n")
+                    failed_users_file.flush()
 
         except:
             print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
@@ -147,4 +220,4 @@ def split_huff_and_twitter_line(line):
     return huff_name, twitter_names
 
 
-load_followers_for_users_from_file()
+load_following_for_users_from_file()

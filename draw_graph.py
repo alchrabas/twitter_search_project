@@ -58,7 +58,7 @@ def apply_styles(graph, styles):
 
 def main():
   dataset = {
-      u'users' : parse_csv('data/to_graphviz.csv')
+      u'users' : parse_csv('data/user_edges.csv')
   }
   g = Digraph(format='svg')
   for key in dataset:
