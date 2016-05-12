@@ -228,13 +228,23 @@ def top_hashtags():
 
     start_time = time.time()
 
+    LINES_TO_SKIP = 3207
+    line_no = 0
+
     for tag in top_tags:
+        line_no += 1
+        if line_no < LINES_TO_SKIP:
+            continue
+
         tag = tag.strip()
+        tag = tag.replace(" ", "")
+
         print("Search for tag ", tag)
         print("Time elapsed: ", (time.time() - start_time))
-        search_results = get_api_and_move_to_end().search(q="#" + tag, lang="en", rpp=100)
-        for result in search_results:
-            try:
+        try:
+            search_results = get_api_and_move_to_end().search(q="#" + tag, lang="en", rpp=100)
+            for result in search_results:
+
                 if not is_user_in_db(result.author.id, cur):
                     save_user_in_db(result.author, cur)
 
@@ -242,11 +252,11 @@ def top_hashtags():
                 VALUES (%s, %s, %s, %s)""", (result.id, result.author.id, result.text, result.created_at))
 
                 conn.commit()
-            except:
-                print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
-                conn.rollback()
-                failed_tags_file.write(tag)
-                failed_tags_file.flush()
+        except:
+            print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
+            conn.rollback()
+            failed_tags_file.write(tag)
+            failed_tags_file.flush()
 
 
 top_hashtags()
