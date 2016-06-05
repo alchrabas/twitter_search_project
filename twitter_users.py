@@ -115,7 +115,7 @@ def load_followers_for_users_from_file():
             continue
 
         try:
-            huff_name, twitter_names = split_huff_and_twitter_line(line)
+            huff_name, twitter_names = split_huff_and_twitter_line_from_list(line)
 
             for twitter_name in twitter_names:
 
@@ -169,7 +169,7 @@ def load_following_for_users_from_file():
             continue
 
         try:
-            huff_name, twitter_names = split_huff_and_twitter_line(line)
+            huff_name, twitter_names = split_huff_and_twitter_line_from_list(line)
 
             for twitter_name in twitter_names:
                 print("Working on ", twitter_name)
@@ -214,7 +214,7 @@ def load_following_for_users_from_file():
     failed_users_file.close()
 
 
-def split_huff_and_twitter_line(line):
+def split_huff_and_twitter_line_from_list(line):
     huff_name, _, twitter_names = line.partition(" [")
     twitter_names = eval("[" + twitter_names)
     return huff_name, twitter_names
@@ -228,7 +228,7 @@ def top_hashtags():
 
     start_time = time.time()
 
-    LINES_TO_SKIP = 3207
+    LINES_TO_SKIP = 0
     line_no = 0
 
     for tag in top_tags:
@@ -259,4 +259,38 @@ def top_hashtags():
             failed_tags_file.flush()
 
 
-top_hashtags()
+def update_followers_and_followed_count_for_fetched(cur):
+    i = 0
+    for (twitter_user_id, twitter_user_name) in cur.fetchall():
+        i += 1
+        try:
+            twitter_user = get_api_and_move_to_end().get_user(twitter_user_id)
+            followers = twitter_user.followers_count
+            followed = twitter_user.friends_count
+
+            cur.execute("UPDATE twitter_users SET followers = %s, followed = %s WHERE id = %s",
+                        (followers, followed, twitter_user_id))
+
+            if i % 100 == 0:
+                print(i)
+
+            conn.commit()
+        except:
+            print("### SOMETHING HAS BROKEN INCORRECTLY ", str(sys.exc_info()), traceback.print_exc())
+            conn.rollback()
+
+
+def load_follower_followed_data():
+    cur = conn.cursor()
+
+    cur.execute("""SELECT id, username FROM twitter_users tu
+        INNER JOIN huff_twitter_users_junction htuj ON twitter_user_id = tu.id
+      WHERE followers IS NULL AND followed IS NULL""")
+    update_followers_and_followed_count_for_fetched(cur)
+
+    cur.execute("""SELECT id, username FROM twitter_users tu
+      WHERE followers IS NULL AND followed IS NULL""")
+    update_followers_and_followed_count_for_fetched(cur)
+
+
+load_follower_followed_data()
