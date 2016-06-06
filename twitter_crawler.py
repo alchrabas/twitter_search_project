@@ -20,9 +20,6 @@ def check_most_active_users():
     # out_file = open("matching_users.txt", "a")
 
 
-    for i in range(956):
-        huff_users_file.readline()
-
     for line in huff_users_file:
         user_tuple = eval(line)
         user_name = user_tuple[0]
