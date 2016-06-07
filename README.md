@@ -39,7 +39,11 @@ There are the following functions that can be run to retrieve the data located i
  - check_hashtags - test whether Twitter Search API works for old dates (it doesn't)
  - load_followers_for_users_from_file - retrieves Huffington users (stored in `matching_users`) and loads random 20 followers for every Twitter user
  - load_following_for_users_from_file - retrieves Huffington users (stored in `matching_users`) and loads random 100 following for every Twitter user
- - top_hashtags - search for hashtags being top 10000 Huffington tags
  - load_follower_followed_data - load number of followers and followed users for every Twitter user from db
+ 
+## Collecting hashtags
+ - top_hashtags - search on Twitter for hashtags being top 10000 Huffington tags
+
+It can be run multiple times. 
  
 The other functions are used internally.
